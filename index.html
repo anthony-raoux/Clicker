@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clicker Tacos</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Conteneur pour l'image et l'affichage des tacos -->
+        <div class="left-container">
+            <h1>Clicker Tacos</h1>
+            <div class="tps" id="tpsDisplay">Tacos par seconde: 0</div>
+            <div class="clickMultiplierDisplay">Tacos par clic: 1</div> <!-- Ajout de l'affichage pour les tacos par clic -->
+            <div class="points">
+                Tacos: <span id="tacos">0</span>
+            </div>
+            <img src="./media/tacos_idle_game1.webp" alt="tacos" id="clickButton" class="tacos-img">
+        </div>
+
+          <!-- GIF en arrière-plan -->
+          <div class="background-container">
+            <img src="./media/background_cute.jpg" alt="GIF de fond">
+        </div>
+
+          <!-- Section pour le GIF centré -->
+          <div class="gif-container">
+            <img src="./media/background_clicker.gif" alt="GIF centré">
+        </div>
+        
+        
+        <!-- Conteneur pour la boutique -->
+        <div class="right-container">
+            <div class="shop">
+                <h2>Boutique</h2>
+                <div class="shop-item">
+                    <img src="./media/salade_idle_game.jpg" alt="Auto Clicker">
+                    <button id="autoClickerBtn">Acheter Auto Clicker (Coût: 10)</button>
+                </div>
+                <div class="shop-item">
+                    <img src="./media/tomate_idle_game.jpg" alt="Click Multiplier">
+                    <button id="clickMultiplierBtn">Acheter Multiplicateur de Clics (Coût: 50)</button>
+                </div>
+                <div class="shop-item">
+                    <img src="./media/sauce_idle_game.png" alt="Bonus">
+                    <button id="bonusBtn">Acheter Bonus Temporaire (Coût: 20)</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Bouton pour réinitialiser le jeu -->
+    <div class="controls">
+        <button onclick="resetGame()">Réinitialiser le jeu</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f3f3f3; /* Couleur de fond */
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 100%;
+    margin: 50px auto;
+    display: flex;
+    flex-direction: row; /* Ajustement de la direction flex à 'row' pour aligner les éléments horizontalement */
+    justify-content: space-between; /* Ajout de cet attribut pour espacer les éléments sur toute la largeur */
+}
+
+
+.left-container, .right-container {
+    width: 100%; /* Faites en sorte que les conteneurs occupent toute la largeur */
+    max-width: 400px; /* Limitez la largeur maximale à 800px */
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 10px 20px 20px; /* Ajoutez une marge en bas de 20px entre les conteneurs */
+}
+
+.points {
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.clickMultiplierDisplay {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+h1, h2 {
+    margin: 0 0 20px; /* Marge en bas pour l'en-tête */
+    text-align: center;
+}
+
+.tps {
+    font-size: 16px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.tacos-img {
+    width: 200px;
+    height: auto;
+    cursor: pointer;
+    margin-top: 50px; /* Ajustez la marge supérieure pour éloigner le bouton du haut */
+    transition: transform 0.2s; /* Ajout d'une transition pour un effet de zoom */
+    display: block; /* Permet de régler les marges automatiquement */
+    margin: 0 auto; /* Centre l'image horizontalement */
+}
+
+.tacos-img:hover {
+    opacity: 0.8;
+    transform: scale(1.20);
+}
+
+.tacos-img:active {
+    transform: scale(0.99);
+}
+
+.shop {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.shop-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.shop-item img {
+    width: 140px;
+    height: 120px;
+    margin-right: 20px; /* Augmentation de la marge */
+    transition: filter 0.3s; /* Transition pour l'effet d'éclaircissement */
+}
+
+.shop-item img:hover {
+    filter: brightness(1.2); /* Éclaircissement au survol */
+}
+
+.shop-item button {
+    flex: 1; /* Ajustement de la largeur du bouton */
+    background-color: #ffd54b; /* Couleur de fond */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px; /* Augmentation du rembourrage */
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s; /* Transition pour un effet de survol */
+}
+
+.shop-item button:hover {
+    background-color: #ffef0c; /* Couleur de fond au survol */
+}
+
+.controls button {
+    font-size: 18px;
+    padding: 15px 30px; /* Augmenter la taille du bouton */
+    border: none;
+    border-radius: 10px;
+    background-color: #4CAF50; /* Couleur de fond */
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s; /* Transition pour l'effet de survol */
+}
+
+.controls button:hover {
+    background-color: #45a049; /* Couleur de fond au survol */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre portée au survol */
+}
+
+.controls button:active {
+    transform: scale(0.95); /* Réduire légèrement la taille lors du clic */
+}
+
+.background-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.background-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.gif-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 20px; /* Ajustez les marges pour centrer le conteneur GIF horizontalement */
+}
+
+.gif-container img {
+    width: 500px; /* Assurez-vous que le GIF ne dépasse pas la largeur du conteneur */
+    height: 300px; /* Garantit que le ratio d'aspect est conservé */
+}
