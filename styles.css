@@ -151,3 +151,43 @@ h1, h2 {
     width: 500px; /* Assurez-vous que le GIF ne dépasse pas la largeur du conteneur */
     height: 300px; /* Garantit que le ratio d'aspect est conservé */
 }
+
+@keyframes fadeOut {
+    0% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-50px); }
+}
+
+.click-feedback-animation {
+    animation: fadeOut 1s ease-out forwards;
+}
+
+/* Style pour le conteneur de niveaux */
+.level-container {
+    position: absolute;
+    bottom: 30px; /* Ajustez la distance par rapport au bas selon votre préférence */
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+}
+
+/* Style pour l'affichage du niveau */
+#levelDisplay {
+    font-size: 24px; /* Ajustez la taille de la police selon votre préférence */
+    color: white; /* Couleur du texte en blanc */
+}
+
+/* Style pour les boutons de niveau */
+#levelButtons button {
+    font-size: 18px; /* Ajustez la taille de la police selon votre préférence */
+    background-color: transparent;
+    color: white; /* Couleur du texte en blanc */
+    border: 2px solid white; /* Bordure blanche */
+    padding: 8px 16px;
+    margin-top: 10px; /* Espace entre les boutons */
+    cursor: pointer;
+}
+
+#levelButtons button:hover {
+    background-color: white;
+    color: black; /* Couleur du texte en noir au survol */
+}
