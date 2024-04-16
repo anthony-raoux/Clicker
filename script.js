@@ -30,7 +30,7 @@ autoClickerBtn.addEventListener('click', () => {
         autoClickers++;
         autoClickerCost *= 2; // Augmentation du coût pour le prochain auto-clicker
         updateTacosDisplay();
-        updateShopDisplay();
+        updateShopDisplay(); // Mettre à jour l'affichage de la boutique
         updateTacosPerSecond(); // Mettre à jour le nombre de tacos par seconde
     } else {
         alert("Pas assez de tacos !");
@@ -44,7 +44,7 @@ clickMultiplierBtn.addEventListener('click', () => {
         clickMultiplier *= 2;
         clickMultiplierCost *= 2; // Augmentation du coût pour le prochain multiplicateur de clics
         updateTacosDisplay();
-        updateShopDisplay();
+        updateShopDisplay(); // Mettre à jour l'affichage de la boutique
         updateTacosPerClick(); // Mettre à jour le nombre de tacos par clic
         updateTacosPerSecond(); // Mettre à jour le nombre de tacos par seconde
     } else {
@@ -108,6 +108,41 @@ function applyBonus() {
 // Démarrer les auto-clickers
 startAutoClicker();
 
+// Fonction de réinitialisation du jeu
+function resetGame() {
+    // Demander une confirmation à l'utilisateur avant de réinitialiser le jeu
+    const confirmation = confirm("Êtes-vous sûr de vouloir réinitialiser le jeu ?");
+    if (confirmation) {
+        // Remise à zéro des valeurs du jeu
+        tacos = 0;
+        autoClickerCost = 10;
+        autoClickers = 0;
+        clickMultiplierCost = 50;
+        clickMultiplier = 1;
+        bonusCost = 20;
+        tacosPerSecond = 0;
+
+        // Mise à jour de l'affichage
+        updateTacosDisplay();
+        updateShopDisplay();
+        updateTacosPerSecond(); // Mettre à jour le nombre de tacos par seconde
+        updateTacosPerClick(); // Mettre à jour le nombre de tacos par clic
+
+        // Affichage du message d'alerte
+        alert("Le jeu a été réinitialisé !");
+    }
+}
+
+// Appel de la fonction pour charger l'état du jeu au chargement de la page
+window.onload = loadGame;
+
+// Appel de la fonction pour sauvegarder l'état du jeu à chaque mise à jour importante
+// Par exemple, à la fin de la fonction updateTacosDisplay()
+updateTacosDisplay = () => {
+    tacosDisplay.textContent = tacos;
+    saveGame(); // Appel de la fonction pour sauvegarder l'état du jeu
+};
+
 // Fonction pour sauvegarder l'état du jeu dans le localStorage
 function saveGame() {
     const gameState = {
@@ -140,6 +175,7 @@ function loadGame() {
     }
 }
 
+
 // Appel de la fonction pour charger l'état du jeu au chargement de la page
 window.onload = loadGame;
 
@@ -152,18 +188,27 @@ updateTacosDisplay = () => {
 
 // Fonction de réinitialisation du jeu
 function resetGame() {
-    tacos = 0;
-    autoClickerCost = 10;
-    autoClickers = 0;
-    clickMultiplierCost = 50;
-    clickMultiplier = 1;
-    bonusCost = 20;
-    tacosPerSecond = 0;
+    // Demander une confirmation à l'utilisateur avant de réinitialiser le jeu
+    const confirmation = confirm("Êtes-vous sûr de vouloir réinitialiser le jeu ?");
+    if (confirmation) {
+        // Remise à zéro des valeurs du jeu
+        tacos = 0;
+        autoClickerCost = 10;
+        autoClickers = 0;
+        clickMultiplierCost = 50;
+        clickMultiplier = 1;
+        bonusCost = 20;
+        tacosPerSecond = 0;
 
-    updateTacosDisplay();
-    updateShopDisplay();
-    updateTacosPerSecond(); // Mettre à jour le nombre de tacos par seconde
-    updateTacosPerClick(); // Mettre à jour le nombre de tacos par clic
+        // Mise à jour de l'affichage
+        updateTacosDisplay();
+        updateShopDisplay();
+        updateTacosPerSecond(); // Mettre à jour le nombre de tacos par seconde
+        updateTacosPerClick(); // Mettre à jour le nombre de tacos par clic
+
+        // Affichage du message d'alerte
+        alert("Le jeu a été réinitialisé !");
+    }
 }
 
 clickButton.addEventListener('click', (event) => {
@@ -192,25 +237,8 @@ clickButton.addEventListener('click', (event) => {
 });
 
 let currentLevel = 1;
-let maxLevel = 5; // Par exemple, vous pouvez définir un maximum de 5 niveaux
-let levelCost = 100; // Coût initial pour débloquer le prochain niveau
-
-// Fonction d'achat de niveau
-function buyLevel() {
-    if (tacos >= levelCost && currentLevel < maxLevel) {
-        tacos -= levelCost;
-        currentLevel++;
-        levelCost *= 2; // Augmentation du coût pour le prochain niveau
-        updateTacosDisplay();
-        updateShopDisplay();
-        updateLevelDisplay(); // Mettre à jour l'affichage du niveau
-        addTacoImage(); // Ajouter l'image de taco
-    } else if (currentLevel >= maxLevel) {
-        alert("Vous avez atteint le niveau maximum !");
-    } else {
-        alert("Pas assez de tacos !");
-    }
-}
+let maxLevel = 10; // Par exemple, vous pouvez définir un maximum de 5 niveaux
+let levelCost = 1000; // Coût initial pour débloquer le prochain niveau
 
 // Mise à jour de l'affichage du niveau
 function updateLevelDisplay() {
@@ -233,26 +261,58 @@ function updateShopDisplay() {
 
 // Tableau contenant les chemins d'accès des images de tacos pour chaque niveau
 const tacoImages = [
-    './media/level1.png',
-    './media/taco_level_2.png',
-    './media/taco_level_3.png',
+    'level1.png',
+    './media/level2.png',
+    './media/level3.png',
+
+
     // Ajoutez les chemins d'accès des images pour chaque niveau suivant
 ];
 
-// Fonction pour ajouter une image de taco correspondant au niveau actuel
-function addTacoImage() {
-    const levelImageContainer = document.getElementById('levelImage');
-    const tacoImage = document.createElement('img');
-    
-    // Récupérer le chemin d'accès de l'image correspondant au niveau actuel
+// Fonction d'achat de niveau
+function buyLevel() {
+    if (tacos >= levelCost && currentLevel < maxLevel) {
+        tacos -= levelCost;
+        currentLevel++;
+        levelCost *= 2; // Augmentation du coût pour le prochain niveau
+        updateTacosDisplay();
+        updateShopDisplay();
+        updateLevelDisplay(); // Mettre à jour l'affichage du niveau
+        addUnlockedTrophy(); // Ajouter l'image du trophée débloqué
+    } else if (currentLevel >= maxLevel) {
+        alert("Vous avez atteint le niveau maximum !");
+    } else {
+        alert("Pas assez de tacos !");
+    }
+}
+
+// Fonction pour ajouter une image de taco débloquée dans la section des trophées
+function addUnlockedTrophy() {
+    const trophyImagesContainer = document.getElementById('trophyImages');
+    const trophyImage = document.createElement('img');
+
+    // Récupérer le chemin d'accès de l'image débloquée correspondant au niveau actuel
     const imageIndex = currentLevel - 1; // Soustrayez 1 car les tableaux commencent à l'index 0
     const imagePath = tacoImages[imageIndex];
-    
+
+    trophyImage.src = imagePath; // Utilisez le chemin d'accès récupéré
+    trophyImage.alt = 'Trophée'; // Texte alternatif pour l'image
+    trophyImage.classList.add('trophy-image'); // Ajouter une classe pour les styles CSS
+    trophyImagesContainer.appendChild(trophyImage); // Ajoutez l'image à la section des trophées
+}
+
     tacoImage.src = imagePath; // Utilisez le chemin d'accès récupéré
-    tacoImage.alt = 'Taco'; // Texte alternatif pour l'image
+    tacoImage.alt = 'Tacos'; // Texte alternatif pour l'image
     tacoImage.style.width = '50px'; // Ajustez la taille de l'image selon votre préférence
     tacoImage.style.height = 'auto'; // Ajustez la taille de l'image selon votre préférence
-    levelImageContainer.innerHTML = ''; // Assurez-vous qu'il n'y a pas déjà une image
-    levelImageContainer.appendChild(tacoImage); // Ajoutez l'image au conteneur
-}
+    tacoImage.style.opacity = '0'; // Initialisez l'opacité à 0 pour l'animation
+    
+    // Ajoutez l'image au conteneur
+    levelImageContainer.innerHTML = '';
+    levelImageContainer.appendChild(tacoImage);
+
+    // Animation pour faire apparaître l'image avec une transition d'opacité
+    setTimeout(() => {
+        tacoImage.style.opacity = '1';
+    }, 100); // Démarrez l'animation après un court délai
 

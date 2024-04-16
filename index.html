@@ -10,7 +10,7 @@
     <div class="container">
         <!-- Conteneur pour l'image et l'affichage des tacos -->
         <div class="left-container">
-            <h1>Clicker Tacos</h1>
+            <h1>Collectionne-les tous !!!</h1>
             <div class="tps" id="tpsDisplay">Tacos par seconde: 0</div>
             <div class="clickMultiplierDisplay">Tacos par clic: 1</div> <!-- Ajout de l'affichage pour les tacos par clic -->
             <div class="points">
@@ -24,21 +24,31 @@
             <img src="./media/background_cute.jpg" alt="GIF de fond">
         </div>
 
+            <!-- Section pour les trophées -->
+        <div id="trophyContainer">
+            <h2>Trophées</h2>
+            <div id="trophyImages" class="trophy-images"></div>
+        </div>
+
           <!-- Section pour le GIF centré -->
           <div class="gif-container">
             <img src="./media/background_clicker.gif" alt="GIF centré">
         </div>
 
-            <!-- Affichage du niveau -->
-        <div id="levelDisplay">Niveau actuel: 1</div>
+        <!-- Conteneur pour les niveaux -->
+<div class="level-container">
+    <!-- Affichage du niveau -->
+    <div id="levelDisplay">Niveau actuel: 1</div>
 
-        <!-- Boutons de niveau -->
-        <div id="levelButtons">
-            <button onclick="buyLevel()">Acheter Niveau Suivant</button>
-        </div>
+    <!-- Boutons de niveau -->
+    <div id="levelButtons">
+        <button onclick="buyLevel()">Acheter Niveau Suivant</button>
+    </div>
 
-        <!-- Conteneur pour l'image de taco -->
-        <div id="levelImage"></div>
+    <!-- Conteneur pour l'image de taco -->
+    <div id="levelImage"></div>
+</div>
+
 
         
         <!-- Conteneur pour la boutique -->
