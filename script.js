@@ -120,6 +120,7 @@ function resetGame() {
         clickMultiplier = 1;
         bonusCost = 20;
         tacosPerSecond = 0;
+        levelCost = 100; // Mettre à jour le coût du niveau à 100
 
         // Mise à jour de l'affichage
         updateTacosDisplay();
@@ -229,6 +230,9 @@ function resetGame() {
         bonusCost = 20;
         tacosPerSecond = 0;
         currentLevel = 1; // Réinitialiser le niveau à 1
+
+        // Réinitialiser le coût du niveau au coût initial (niveau 1)
+        levelCost = 100;
 
         // Supprimer toutes les images des trophées
         const trophyImagesContainer = document.getElementById('trophyImages');
