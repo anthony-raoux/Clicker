@@ -153,6 +153,7 @@ function saveGame() {
         bonusCost: bonusCost,
         tacosPerSecond: tacosPerSecond,
         currentLevel: currentLevel,
+        levelCost: levelCost, // Ajout du coût du niveau dans l'objet gameState
         trophyImages: getTrophyImagePaths() // Appel de la fonction pour obtenir les chemins d'accès des images des trophées
     };
     localStorage.setItem('clickerGameState', JSON.stringify(gameState));
@@ -170,6 +171,7 @@ function loadGame() {
         clickMultiplier = gameState.clickMultiplier;
         bonusCost = gameState.bonusCost;
         tacosPerSecond = gameState.tacosPerSecond;
+        levelCost = gameState.levelCost; // Mettre à jour le coût du niveau
         currentLevel = gameState.currentLevel;
         updateTacosDisplay();
         updateShopDisplay();
@@ -270,29 +272,28 @@ let currentLevel = 1;
 let maxLevel = 10; // Par exemple, vous pouvez définir un maximum de 5 niveaux
 let levelCost = 100; // Coût initial pour débloquer le prochain niveau
 
-// Mise à jour de l'affichage du niveau
+// Fonction de mise à jour de l'affichage du niveau
 function updateLevelDisplay() {
     const levelDisplay = document.getElementById('levelDisplay');
     levelDisplay.textContent = `Niveau actuel: ${currentLevel}`;
 }
 
-// Mise à jour de l'affichage de la boutique
+// Mise à jour de l'affichage de la boutique pour inclure le coût du prochain niveau
 function updateShopDisplay() {
     autoClickerBtn.textContent = `Acheter Auto Clicker (Coût: ${autoClickerCost})`;
     clickMultiplierBtn.textContent = `Acheter Multiplicateur de Clics (Coût: ${clickMultiplierCost})`;
     bonusBtn.textContent = `Acheter Bonus Temporaire (Coût: ${bonusCost})`;
-    // Ajoutez d'autres mises à jour de l'affichage de la boutique si nécessaire
-}
 
-    // Autres mises à jour de l'affichage de la boutique
+    const levelButton = document.getElementById('levelButtons'); // Sélectionnez le conteneur du bouton de niveau
 
-    // Mise à jour du coût du niveau
-    const levelButton = document.getElementById('levelButtons');
     if (currentLevel < maxLevel) {
+        // Si le niveau actuel est inférieur au niveau maximum, affichez le bouton pour acheter le niveau suivant avec son coût
         levelButton.innerHTML = `<button onclick="buyLevel()">Acheter Niveau Suivant (Coût: ${levelCost})</button>`;
     } else {
+        // Sinon, si le niveau maximum est atteint, affichez un bouton désactivé indiquant que le niveau maximum est atteint
         levelButton.innerHTML = `<button disabled>Max Niveau Atteint</button>`;
     }
+}
 
 // Tableau contenant les chemins d'accès des images de tacos pour chaque niveau
 const tacoImages = [
@@ -304,12 +305,15 @@ const tacoImages = [
     // Ajoutez les chemins d'accès des images pour chaque niveau suivant
 ];
 
-// Fonction d'achat de niveau
+// Modifier la fonction d'achat de niveau
 function buyLevel() {
-    if (tacos >= levelCost && currentLevel < maxLevel) {
-        tacos -= levelCost;
+    // Calcul du coût du prochain niveau en fonction du niveau actuel
+    const newLevelCost = currentLevel * 100; // Coefficient de 100 pour chaque niveau
+
+    if (tacos >= newLevelCost && currentLevel < maxLevel) {
+        tacos -= newLevelCost;
         currentLevel++;
-        levelCost *= 2; // Augmentation du coût pour le prochain niveau
+        levelCost = (currentLevel * 100); // Mettre à jour le coût avec le nouveau coût calculé
         updateTacosDisplay();
         updateShopDisplay();
         updateLevelDisplay(); // Mettre à jour l'affichage du niveau
