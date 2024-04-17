@@ -250,12 +250,12 @@ clickButton.addEventListener('click', (event) => {
     const clickY = event.clientY - container.getBoundingClientRect().top;
 
     const clickFeedback = document.createElement('div');
-    clickFeedback.textContent = `+${clickMultiplier}`;
+    clickFeedback.textContent = '\uD83D\uDC9B'; // Texte vide
     clickFeedback.style.position = 'absolute';
     clickFeedback.style.top = `${clickY}px`;
     clickFeedback.style.left = `${clickX}px`;
     clickFeedback.style.fontSize = '24px';
-    clickFeedback.style.color = 'black';
+    clickFeedback.style.color = '';
     clickFeedback.id = 'clickFeedback';
 
     container.appendChild(clickFeedback);
@@ -265,9 +265,6 @@ clickButton.addEventListener('click', (event) => {
     }, 1000);
 
     clickFeedback.classList.add('click-feedback-animation'); // Ajout de la classe pour l'animation
-
-    tacos += clickMultiplier;
-    updateTacosDisplay();
 });
 
 let currentLevel = 1;
