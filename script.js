@@ -227,7 +227,7 @@ function resetGame() {
         clickMultiplier = 1;
         bonusCost = 20;
         tacosPerSecond = 0;
-        currentLevel = 1; // Réinitialisation du niveau à 1
+        currentLevel = 1; // Réinitialiser le niveau à 1
 
         // Supprimer toutes les images des trophées
         const trophyImagesContainer = document.getElementById('trophyImages');
@@ -350,4 +350,4 @@ function addUnlockedTrophy() {
         tacoImage.style.opacity = '1';
     }, 100); // Démarrez l'animation après un court délai
 
-//quand je reset la page elle reste, j'aimerais que les trophées sois sauvegarder dans le local storage
+//
