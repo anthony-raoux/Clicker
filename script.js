@@ -152,7 +152,9 @@ function saveGame() {
         clickMultiplierCost: clickMultiplierCost,
         clickMultiplier: clickMultiplier,
         bonusCost: bonusCost,
-        tacosPerSecond: tacosPerSecond
+        tacosPerSecond: tacosPerSecond,
+        currentLevel: currentLevel,
+        trophyImages: getTrophyImagePaths() // Appel de la fonction pour obtenir les chemins d'accès des images des trophées
     };
     localStorage.setItem('clickerGameState', JSON.stringify(gameState));
 }
@@ -169,15 +171,41 @@ function loadGame() {
         clickMultiplier = gameState.clickMultiplier;
         bonusCost = gameState.bonusCost;
         tacosPerSecond = gameState.tacosPerSecond;
+        currentLevel = gameState.currentLevel;
         updateTacosDisplay();
         updateShopDisplay();
         updateTacosPerSecond();
+        updateLevelDisplay(); // Mettre à jour l'affichage du niveau
+        loadTrophyImages(gameState.trophyImages); // Appel de la fonction pour charger les images des trophées
     }
 }
 
+// Fonction pour obtenir les chemins d'accès des images des trophées
+function getTrophyImagePaths() {
+    const trophyImagesContainer = document.getElementById('trophyImages');
+    const trophyImages = trophyImagesContainer.querySelectorAll('.trophy-image');
+    const imagePaths = [];
+    trophyImages.forEach(image => {
+        imagePaths.push(image.src);
+    });
+    return imagePaths;
+}
 
 // Appel de la fonction pour charger l'état du jeu au chargement de la page
 window.onload = loadGame;
+
+// Fonction pour charger les images des trophées
+function loadTrophyImages(imagePaths) {
+    const trophyImagesContainer = document.getElementById('trophyImages');
+    trophyImagesContainer.innerHTML = ''; // Effacer les images précédentes pour éviter les doublons
+    imagePaths.forEach(imagePath => {
+        const trophyImage = document.createElement('img');
+        trophyImage.src = imagePath;
+        trophyImage.alt = 'Trophée';
+        trophyImage.classList.add('trophy-image');
+        trophyImagesContainer.appendChild(trophyImage);
+    });
+}
 
 // Appel de la fonction pour sauvegarder l'état du jeu à chaque mise à jour importante
 // Par exemple, à la fin de la fonction updateTacosDisplay()
@@ -199,12 +227,18 @@ function resetGame() {
         clickMultiplier = 1;
         bonusCost = 20;
         tacosPerSecond = 0;
+        currentLevel = 1; // Réinitialisation du niveau à 1
+
+        // Supprimer toutes les images des trophées
+        const trophyImagesContainer = document.getElementById('trophyImages');
+        trophyImagesContainer.innerHTML = '';
 
         // Mise à jour de l'affichage
         updateTacosDisplay();
         updateShopDisplay();
         updateTacosPerSecond(); // Mettre à jour le nombre de tacos par seconde
         updateTacosPerClick(); // Mettre à jour le nombre de tacos par clic
+        updateLevelDisplay(); // Mettre à jour l'affichage du niveau
 
         // Affichage du message d'alerte
         alert("Le jeu a été réinitialisé !");
@@ -238,7 +272,7 @@ clickButton.addEventListener('click', (event) => {
 
 let currentLevel = 1;
 let maxLevel = 10; // Par exemple, vous pouvez définir un maximum de 5 niveaux
-let levelCost = 1000; // Coût initial pour débloquer le prochain niveau
+let levelCost = 100; // Coût initial pour débloquer le prochain niveau
 
 // Mise à jour de l'affichage du niveau
 function updateLevelDisplay() {
@@ -316,3 +350,4 @@ function addUnlockedTrophy() {
         tacoImage.style.opacity = '1';
     }, 100); // Démarrez l'animation après un court délai
 
+//quand je reset la page elle reste, j'aimerais que les trophées sois sauvegarder dans le local storage
