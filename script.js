@@ -300,6 +300,9 @@ const tacoImages = [
     'level1.png',
     './media/level2.png',
     './media/level3.png',
+    './media/level4.png',
+    './media/level5.png',
+    
 
 
     // Ajoutez les chemins d'accès des images pour chaque niveau suivant
