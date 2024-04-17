@@ -2,7 +2,7 @@
 let tacos = 0;
 let autoClickerCost = 10;
 let autoClickers = 0;
-let clickMultiplierCost = 50;
+let clickMultiplierCost = 150;
 let clickMultiplier = 1;
 let bonusCost = 20;
 let tacosPerSecond = 0; // Variable pour stocker le nombre de tacos par seconde
@@ -225,7 +225,7 @@ function resetGame() {
         tacos = 0;
         autoClickerCost = 10;
         autoClickers = 0;
-        clickMultiplierCost = 50;
+        clickMultiplierCost = 150;
         clickMultiplier = 1;
         bonusCost = 20;
         tacosPerSecond = 0;
@@ -306,6 +306,9 @@ const tacoImages = [
     './media/level3.png',
     './media/level4.png',
     './media/level5.png',
+    './media/level6.png',
+    './media/level7.png',
+    
     
 
 
@@ -353,7 +356,7 @@ function addTacoImageToLevel(levelImageContainer, imagePath) {
     tacoImage.src = imagePath; // Utilisez le chemin d'accès récupéré
     tacoImage.alt = 'Tacos'; // Texte alternatif pour l'image
     tacoImage.style.width = '50px'; // Ajustez la taille de l'image selon votre préférence
-    tacoImage.style.height = 'auto'; // Ajustez la taille de l'image selon votre préférence
+    tacoImage.style.height = '50px'; // Ajustez la taille de l'image selon votre préférence
     tacoImage.style.opacity = '0'; // Initialisez l'opacité à 0 pour l'animation
     
     // Ajoutez l'image au conteneur
@@ -365,3 +368,5 @@ function addTacoImageToLevel(levelImageContainer, imagePath) {
         tacoImage.style.opacity = '1';
     }, 100); // Démarrez l'animation après un court délai
 }
+
+
