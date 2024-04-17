@@ -70,7 +70,6 @@ function updateTacosDisplay() {
     tacosDisplay.textContent = tacos;
 }
 
-// Mise à jour de l'affichage de la boutique
 function updateShopDisplay() {
     autoClickerBtn.textContent = `Acheter Auto Clicker (Coût: ${autoClickerCost})`;
     clickMultiplierBtn.textContent = `Acheter Multiplicateur de Clics (Coût: ${clickMultiplierCost})`;
@@ -279,6 +278,12 @@ function updateLevelDisplay() {
 
 // Mise à jour de l'affichage de la boutique
 function updateShopDisplay() {
+    autoClickerBtn.textContent = `Acheter Auto Clicker (Coût: ${autoClickerCost})`;
+    clickMultiplierBtn.textContent = `Acheter Multiplicateur de Clics (Coût: ${clickMultiplierCost})`;
+    bonusBtn.textContent = `Acheter Bonus Temporaire (Coût: ${bonusCost})`;
+    // Ajoutez d'autres mises à jour de l'affichage de la boutique si nécessaire
+}
+
     // Autres mises à jour de l'affichage de la boutique
 
     // Mise à jour du coût du niveau
@@ -288,7 +293,6 @@ function updateShopDisplay() {
     } else {
         levelButton.innerHTML = `<button disabled>Max Niveau Atteint</button>`;
     }
-}
 
 // Tableau contenant les chemins d'accès des images de tacos pour chaque niveau
 const tacoImages = [
@@ -332,6 +336,9 @@ function addUnlockedTrophy() {
     trophyImagesContainer.appendChild(trophyImage); // Ajoutez l'image à la section des trophées
 }
 
+    // Fonction pour ajouter une image de taco à un niveau
+function addTacoImageToLevel(levelImageContainer, imagePath) {
+    const tacoImage = document.createElement('img');
     tacoImage.src = imagePath; // Utilisez le chemin d'accès récupéré
     tacoImage.alt = 'Tacos'; // Texte alternatif pour l'image
     tacoImage.style.width = '50px'; // Ajustez la taille de l'image selon votre préférence
@@ -346,5 +353,4 @@ function addUnlockedTrophy() {
     setTimeout(() => {
         tacoImage.style.opacity = '1';
     }, 100); // Démarrez l'animation après un court délai
-
-//
+}
