@@ -369,4 +369,10 @@ function addTacoImageToLevel(levelImageContainer, imagePath) {
     }, 100); // Démarrez l'animation après un court délai
 }
 
+function toggleMenu() {
+    var menu = document.querySelector('.menu');
+    menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+}
 
+
+//"ajout de plus de trophée, dois ajouter un burger finger pour y mettre l'option de réinialiser, ajouter l'améloration des pouvoirs et séparer la boutique des bonus"

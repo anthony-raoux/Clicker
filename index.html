@@ -7,6 +7,27 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <header>
+        <nav class="navbar">
+            <div class="burger" onclick="toggleMenu()">
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+            </div>
+            <ul class="menu">
+                <!-- Bouton pour réinitialiser le jeu -->
+                <div class="controls">
+                    <button onclick="resetGame()">Réinitialiser le jeu</button>
+                </div>
+            </ul>
+        </nav>
+        <!-- Trophées en dehors de la barre de navigation -->
+        <div id="trophyContainer">
+            <h2>Trophées</h2>
+            <div id="trophyImages" class="trophy-images"></div>
+        </div>
+    </header>
+    
     <div class="container">
         <!-- Conteneur pour l'image et l'affichage des tacos -->
         <div class="left-container">
@@ -24,11 +45,6 @@
             <img src="./media/background_cute.jpg" alt="GIF de fond">
         </div>
 
-            <!-- Section pour les trophées -->
-        <div id="trophyContainer">
-            <h2>Trophées</h2>
-            <div id="trophyImages" class="trophy-images"></div>
-        </div>
 
           <!-- Section pour le GIF centré -->
           
@@ -71,10 +87,6 @@
                 </div>
             </div>
         </div>
-    </div>
-    <!-- Bouton pour réinitialiser le jeu -->
-    <div class="controls">
-        <button onclick="resetGame()">Réinitialiser le jeu</button>
     </div>
   
 </body>
