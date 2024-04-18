@@ -145,6 +145,10 @@ updateTacosDisplay = () => {
 
 // Fonction pour sauvegarder l'état du jeu dans le localStorage
 function saveGame() {
+    const clickMultiplierDisplay = document.querySelector('.clickMultiplierDisplay');
+    const clickMultiplierText = clickMultiplierDisplay.textContent;
+    const clickMultiplierValue = parseInt(clickMultiplierText.match(/\d+/)[0]); // Extraire le nombre de tacos par clic à partir du texte
+
     const gameState = {
         tacos: tacos,
         autoClickerCost: autoClickerCost,
@@ -155,10 +159,12 @@ function saveGame() {
         tacosPerSecond: tacosPerSecond,
         currentLevel: currentLevel,
         levelCost: levelCost, // Ajout du coût du niveau dans l'objet gameState
-        trophyImages: getTrophyImagePaths() // Appel de la fonction pour obtenir les chemins d'accès des images des trophées
+        trophyImages: getTrophyImagePaths(), // Appel de la fonction pour obtenir les chemins d'accès des images des trophées
+        tacosPerClick: clickMultiplierValue // Ajout du nombre de tacos par clic
     };
     localStorage.setItem('clickerGameState', JSON.stringify(gameState));
 }
+
 
 // Fonction pour charger l'état du jeu depuis le localStorage
 function loadGame() {
@@ -174,13 +180,21 @@ function loadGame() {
         tacosPerSecond = gameState.tacosPerSecond;
         levelCost = gameState.levelCost; // Mettre à jour le coût du niveau
         currentLevel = gameState.currentLevel;
+        
+        // Charger le nombre de tacos par clic depuis l'objet gameState
+        const tacosPerClick = gameState.tacosPerClick;
         updateTacosDisplay();
         updateShopDisplay();
         updateTacosPerSecond();
         updateLevelDisplay(); // Mettre à jour l'affichage du niveau
         loadTrophyImages(gameState.trophyImages); // Appel de la fonction pour charger les images des trophées
+        
+        // Mettre à jour l'affichage des tacos par clic
+        const clickMultiplierDisplay = document.querySelector('.clickMultiplierDisplay');
+        clickMultiplierDisplay.textContent = `Tacos par clic: ${tacosPerClick}`;
     }
 }
+
 
 // Fonction pour obtenir les chemins d'accès des images des trophées
 function getTrophyImagePaths() {
@@ -374,5 +388,45 @@ function toggleMenu() {
     menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
 }
 
+// Fonction pour augmenter les tacos par clic
+function increaseClickMultiplier() {
+    // Augmenter le nombre de tacos par clic
+    clickMultiplier++;
+    // Mettre à jour l'affichage
+    updateClickMultiplierDisplay();
+}
 
-//"ajout de plus de trophée, dois ajouter un burger finger pour y mettre l'option de réinialiser, ajouter l'améloration des pouvoirs et séparer la boutique des bonus"
+// Fonction pour mettre à jour l'affichage des tacos par clic
+function updateClickMultiplierDisplay() {
+    const clickMultiplierDisplay = document.querySelector('.clickMultiplierDisplay');
+    clickMultiplierDisplay.textContent = `Tacos par clic: ${clickMultiplier}`;
+}
+
+// Événement pour ajouter un écouteur de clic à l'icône miniIcon1
+const miniIcon1 = document.getElementById('miniIcon1');
+miniIcon1.addEventListener('click', increaseClickMultiplier);
+miniIcon1.addEventListener('click', moveImageRandomly);
+
+// Fonction pour déplacer l'image de façon aléatoire dans la zone centrale de la page
+function moveImageRandomly() {
+    const image = document.getElementById('miniIcon1');
+    // Récupérer les dimensions de la zone centrale de la page
+    const centralAreaWidth = window.innerWidth * 0.2; // 60% de la largeur de la fenêtre
+    const centralAreaHeight = window.innerHeight * 0.2; // 60% de la hauteur de la fenêtre
+    // Générer des coordonnées aléatoires pour la position de l'image dans la zone centrale
+    const randomX = (Math.random() * centralAreaWidth) + (window.innerWidth * 0.2); // Décalage pour centrer l'image horizontalement
+    const randomY = (Math.random() * centralAreaHeight) + (window.innerHeight * 0.2); // Décalage pour centrer l'image verticalement
+    // Appliquer les nouvelles coordonnées de position à l'image
+    image.style.left = randomX + 'px';
+    image.style.top = randomY + 'px';
+     // Masquer l'image pendant un certain temps après un clic
+     image.style.visibility = 'hidden';
+     setTimeout(() => {
+         image.style.visibility = 'visible'; // Rendre à nouveau l'image visible après un délai
+     }, 3000); // 2000 millisecondes (2 secondes) de délai
+ }
+ 
+ //ajouter l'améloration des pouvoirs"
+
+// son et animation aux trophée
+

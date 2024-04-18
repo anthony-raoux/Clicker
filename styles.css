@@ -243,3 +243,31 @@ h1, h2 {
     height: 3px;
     background-color: #fff;
 }
+
+.gif-container {
+    position: relative;
+}
+
+.mini-icon {
+    position: absolute;
+    font-size: 30px; 
+    cursor: pointer; /* Pour montrer qu'il est cliquable */
+    animation: pulse 1s infinite alternate; /* Animation d'agrandissement et de rétrécissement */
+    text-shadow: 0 0 5px black; /* Ajouter un contour noir */
+}
+
+@keyframes pulse {
+    from {
+        transform: scale(0.9);
+    }
+    to {
+        transform: scale(1.4);
+    }
+}
+
+#miniIcon1 {
+    top: 50%; /* Ajustez la position verticale de la première icône */
+    left: 30%; /* Ajustez la position horizontale de la première icône */
+    transform: translate(-50%, -50%); /* Pour centrer l'icône */
+}
+
