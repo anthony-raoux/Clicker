@@ -329,6 +329,9 @@ const tacoImages = [
     // Ajoutez les chemins d'accès des images pour chaque niveau suivant
 ];
 
+// Sélectionnez l'élément audio correspondant à l'effet sonore
+const levelUpSound = document.getElementById('levelUpSound');
+
 // Modifier la fonction d'achat de niveau
 function buyLevel() {
     // Calcul du coût du prochain niveau en fonction du niveau actuel
@@ -342,6 +345,9 @@ function buyLevel() {
         updateShopDisplay();
         updateLevelDisplay(); // Mettre à jour l'affichage du niveau
         addUnlockedTrophy(); // Ajouter l'image du trophée débloqué
+           
+        // Jouer l'effet sonore de niveau
+        levelUpSound.play();
     } else if (currentLevel >= maxLevel) {
         alert("Vous avez atteint le niveau maximum !");
     } else {
@@ -412,10 +418,10 @@ function moveImageRandomly() {
     const image = document.getElementById('miniIcon1');
     // Récupérer les dimensions de la zone centrale de la page
     const centralAreaWidth = window.innerWidth * 0.1; // 60% de la largeur de la fenêtre
-    const centralAreaHeight = window.innerHeight * 0.4; // 60% de la hauteur de la fenêtre
+    const centralAreaHeight = window.innerHeight * 0.3; // 60% de la hauteur de la fenêtre
     // Générer des coordonnées aléatoires pour la position de l'image dans la zone centrale
     const randomX = (Math.random() * centralAreaWidth) + (window.innerWidth * 0.1); // Décalage pour centrer l'image horizontalement
-    const randomY = (Math.random() * centralAreaHeight) + (window.innerHeight * 0.4); // Décalage pour centrer l'image verticalement
+    const randomY = (Math.random() * centralAreaHeight) + (window.innerHeight * 0.3); // Décalage pour centrer l'image verticalement
     // Appliquer les nouvelles coordonnées de position à l'image
     image.style.left = randomX + 'px';
     image.style.top = randomY + 'px';
@@ -427,7 +433,7 @@ function moveImageRandomly() {
  }
  
  // music on et off de fond
- 
+
  document.addEventListener("DOMContentLoaded", function() {
     const toggleMusicButton = document.getElementById("toggleMusicButton");
     const backgroundMusic = document.getElementById("backgroundMusic");
@@ -465,6 +471,19 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
+// son lvl
+
+// Sélectionnez l'image de tacos
+const tacosImage = document.getElementById('clickButton');
+
+// Sélectionnez l'élément audio correspondant à l'effet sonore
+const clickSound = document.getElementById('clickSound1');
+
+// Ajoutez un gestionnaire d'événements pour le clic sur l'image de tacos
+tacosImage.addEventListener('click', function() {
+    // Jouez l'effet sonore du clic
+    clickSound.play();
+});
 
 
  //ajouter l'améloration des pouvoirs"

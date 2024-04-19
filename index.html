@@ -43,6 +43,9 @@
             </div>
             <img src="./media/tacos_idle_game1.webp" alt="tacos" id="clickButton" class="tacos-img">    
         </div>
+        <audio id="clickSound1">
+            <source src="./media/clic.mp3" type="audio/mpeg">
+        </audio>
 
           <!-- photo en arrière-plan -->
           <div class="background-container">
@@ -68,12 +71,12 @@
     <!-- Affichage du niveau -->
     <div id="levelDisplay">Niveau actuel: 1</div>
 
-    <!-- Boutons de niveau -->
+        <!-- Boutons de niveau -->
     <div id="levelButtons">
         <button id="levelButton" onclick="buyLevel()">Acheter Niveau Suivant</button>
     </div>    
     <audio id="levelUpSound">
-        <source src="level_up_sound.mp3" type="audio/mpeg">
+        <source src="./media/levelup.mp3" type="audio/mpeg">
     </audio>
 
     <!-- Conteneur pour l'image de taco -->
