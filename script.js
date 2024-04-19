@@ -411,11 +411,11 @@ miniIcon1.addEventListener('click', moveImageRandomly);
 function moveImageRandomly() {
     const image = document.getElementById('miniIcon1');
     // Récupérer les dimensions de la zone centrale de la page
-    const centralAreaWidth = window.innerWidth * 0.2; // 60% de la largeur de la fenêtre
-    const centralAreaHeight = window.innerHeight * 0.2; // 60% de la hauteur de la fenêtre
+    const centralAreaWidth = window.innerWidth * 0.1; // 60% de la largeur de la fenêtre
+    const centralAreaHeight = window.innerHeight * 0.4; // 60% de la hauteur de la fenêtre
     // Générer des coordonnées aléatoires pour la position de l'image dans la zone centrale
-    const randomX = (Math.random() * centralAreaWidth) + (window.innerWidth * 0.2); // Décalage pour centrer l'image horizontalement
-    const randomY = (Math.random() * centralAreaHeight) + (window.innerHeight * 0.2); // Décalage pour centrer l'image verticalement
+    const randomX = (Math.random() * centralAreaWidth) + (window.innerWidth * 0.1); // Décalage pour centrer l'image horizontalement
+    const randomY = (Math.random() * centralAreaHeight) + (window.innerHeight * 0.4); // Décalage pour centrer l'image verticalement
     // Appliquer les nouvelles coordonnées de position à l'image
     image.style.left = randomX + 'px';
     image.style.top = randomY + 'px';
@@ -425,6 +425,8 @@ function moveImageRandomly() {
          image.style.visibility = 'visible'; // Rendre à nouveau l'image visible après un délai
      }, 5000); // 2000 millisecondes (2 secondes) de délai
  }
+ 
+ // music on et off de fond
  
  document.addEventListener("DOMContentLoaded", function() {
     const toggleMusicButton = document.getElementById("toggleMusicButton");
@@ -448,6 +450,19 @@ function moveImageRandomly() {
 
     // Démarrer la musique dès que le contenu de la page est chargé
     backgroundMusic.play();
+});
+
+// son étoile
+
+document.addEventListener("DOMContentLoaded", function() {
+    const miniIcon = document.getElementById("miniIcon1");
+    const clickSound = document.getElementById("clickSound");
+
+    // Gestionnaire d'événement pour le clic sur l'icône
+    miniIcon.addEventListener("click", function() {
+        // Jouer le son lorsque l'icône est cliquée
+        clickSound.play();
+    });
 });
 
 

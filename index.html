@@ -54,7 +54,10 @@
         <div class="gif-container">
             <img src="./media/background_clicker.gif" alt="GIF centré">
             <!-- Mini-icônes positionnées absolument -->
-            <div class="mini-icon" id="miniIcon1" >&#x2B50;</div>
+            <div id="miniIcon1" class="mini-icon">&#x2B50;</div>
+                <audio id="clickSound">
+        <source src="./media/stareffect.mp3" type="audio/mpeg">
+                </audio>
             <!-- Ajoutez plus d'icônes selon vos besoins -->
         </div>
 
@@ -69,6 +72,9 @@
     <div id="levelButtons">
         <button id="levelButton" onclick="buyLevel()">Acheter Niveau Suivant</button>
     </div>    
+    <audio id="levelUpSound">
+        <source src="level_up_sound.mp3" type="audio/mpeg">
+    </audio>
 
     <!-- Conteneur pour l'image de taco -->
     <div id="levelImage"></div>
