@@ -102,7 +102,7 @@ h1, h2 {
 }
 
 .shop-item button:hover {
-    background-color: #ffef0c; /* Couleur de fond au survol */
+    background-color: #ff95f1; /* Couleur de fond au survol */
 }
 
 .controls button {
@@ -110,14 +110,14 @@ h1, h2 {
     padding: 15px 30px; /* Augmenter la taille du bouton */
     border: none;
     border-radius: 10px;
-    background-color: #4CAF50; /* Couleur de fond */
+    background-color: #ffd54b; /* Couleur de fond */
     color: white;
     cursor: pointer;
     transition: background-color 0.3s; /* Transition pour l'effet de survol */
 }
 
 .controls button:hover {
-    background-color: #45a049; /* Couleur de fond au survol */
+    background-color: #ff95f1; /* Couleur de fond au survol */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre portée au survol */
 }
 
@@ -271,3 +271,9 @@ h1, h2 {
     transform: translate(-50%, -50%); /* Pour centrer l'icône */
 }
 
+#bonusTimerDisplay {
+    font-size: 18px;
+    font-weight: bold;
+    color: #ff95f1;
+    margin-top: 10px;
+}

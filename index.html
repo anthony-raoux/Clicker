@@ -41,11 +41,11 @@
             <div class="points">
                 Tacos: <span id="tacos">0</span>
             </div>
-            <img src="./media/tacos_idle_game1.webp" alt="tacos" id="clickButton" class="tacos-img">    
+            <img src="./media/tacos_idle_game1.webp" alt="tacos" id="clickButton" class="tacos-img"> 
+            <div id="bonusTimerDisplay"></div>   
         </div>
-        <audio id="clickSound1">
-            <source src="./media/clic.mp3" type="audio/mpeg">
-        </audio>
+        <div id="bonusTimerDisplay"></div>
+       
 
           <!-- photo en arrière-plan -->
           <div class="background-container">
@@ -86,7 +86,7 @@
 
         
         <!-- Conteneur pour la boutique -->
-        <div class="right-container">
+        <div class="right-container shop-container">
             <div class="shop">
                 <h2>Boutique</h2>
                 <div class="shop-item">
@@ -106,7 +106,22 @@
             </div>
         </div>
     </div>
-  
+      <!-- Élément audio pour le son des pouvoirs de la boutique -->
+      <audio id="shopPowerSound">
+        <source src="./media/boutiqueson.mp3" type="audio/mpeg">
+    </audio>
+       <!-- Élément audio pour le son d'ouverture du menu -->
+       <audio id="menuOpenSound">
+        <source src="./media/optionon.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Élément audio pour le son de fermeture du menu -->
+    <audio id="menuCloseSound">
+        <source src="./media/optionoff.mp3" type="audio/mpeg">
+    </audio>
+
+
 </body>
     <script src="script.js"></script>
+    <script src="localstorage.js"></script>
 </html>

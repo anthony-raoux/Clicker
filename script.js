@@ -6,6 +6,9 @@ let clickMultiplierCost = 150;
 let clickMultiplier = 1;
 let bonusCost = 20;
 let tacosPerSecond = 0; // Variable pour stocker le nombre de tacos par seconde
+let currentLevel = 1;
+let maxLevel = 7; // Par exemple, vous pouvez définir un maximum de 5 niveaux
+let levelCost = 10000; // Coût initial pour débloquer le prochain niveau
 
 // Éléments DOM
 const tacosDisplay = document.getElementById('tacos');
@@ -16,6 +19,7 @@ const bonusBtn = document.getElementById('bonusBtn');
 const tpsDisplay = document.getElementById('tpsDisplay');
 const clickFeedback = document.getElementById('clickFeedback');
 const container = document.querySelector('.container');
+const bonusTimerDisplay = document.getElementById('bonusTimerDisplay');
 
 // Fonction de clic
 clickButton.addEventListener('click', () => {
@@ -52,18 +56,6 @@ clickMultiplierBtn.addEventListener('click', () => {
     }
 });
 
-// Fonction d'achat d'un bonus temporaire
-bonusBtn.addEventListener('click', () => {
-    if (tacos >= bonusCost) {
-        tacos -= bonusCost;
-        // Appliquer le bonus temporaire
-        applyBonus();
-        updateTacosDisplay();
-        updateShopDisplay();
-    } else {
-        alert("Pas assez de tacos !");
-    }
-});
 
 // Mise à jour de l'affichage des tacos
 function updateTacosDisplay() {
@@ -99,196 +91,43 @@ function startAutoClicker() {
 // Fonction pour appliquer un bonus temporaire
 function applyBonus() {
     clickMultiplier *= 2; // Double le multiplicateur de clics pendant un certain temps
-    setTimeout(() => {
-        clickMultiplier /= 2; // Réinitialise le multiplicateur après la durée du bonus
-    }, 30000); // Durée du bonus: 30 secondes
+    updateBonusTimer(); // Mettre à jour le compte à rebours initial
+    const bonusDuration = 10; // Durée du bonus en secondes
+    const bonusExpirationTime = Date.now() + bonusDuration * 1000; // Calculer l'heure d'expiration du bonus
+
+    const bonusTimerInterval = setInterval(() => {
+        const timeRemaining = Math.max(0, Math.ceil((bonusExpirationTime - Date.now()) / 1000)); // Calculer le temps restant en secondes
+        updateBonusTimer(timeRemaining); // Mettre à jour le compte à rebours avec le temps restant
+
+        if (timeRemaining === 0) {
+            clearInterval(bonusTimerInterval); // Arrêter le compte à rebours une fois le bonus expiré
+            clickMultiplier /= 2; // Réinitialise le multiplicateur après la durée du bonus
+            updateTacosPerClick(); // Mettre à jour le nombre de tacos par clic
+            updateShopDisplay(); // Mettre à jour l'affichage de la boutique
+        }
+    }, 1000); // Mettre à jour le compte à rebours toutes les secondes
 }
+
+// Fonction pour mettre à jour l'affichage du compte à rebours
+function updateBonusTimer(timeRemaining = 10) {
+    bonusTimerDisplay.textContent = `Bonus Temporaire: ${timeRemaining} secondes restantes`;
+}
+
+// Fonction d'achat d'un bonus temporaire
+bonusBtn.addEventListener('click', () => {
+    if (tacos >= bonusCost) {
+        tacos -= bonusCost;
+        // Appliquer le bonus temporaire
+        applyBonus();
+        updateTacosDisplay();
+        updateShopDisplay();
+    } else {
+        alert("Pas assez de tacos !");
+    }
+});
 
 // Démarrer les auto-clickers
 startAutoClicker();
-
-// Fonction de réinitialisation du jeu
-function resetGame() {
-    // Demander une confirmation à l'utilisateur avant de réinitialiser le jeu
-    const confirmation = confirm("Êtes-vous sûr de vouloir réinitialiser le jeu ?");
-    if (confirmation) {
-        // Remise à zéro des valeurs du jeu
-        tacos = 0;
-        autoClickerCost = 10;
-        autoClickers = 0;
-        clickMultiplierCost = 50;
-        clickMultiplier = 1;
-        bonusCost = 20;
-        tacosPerSecond = 0;
-        levelCost = 100; // Mettre à jour le coût du niveau à 100
-
-        // Mise à jour de l'affichage
-        updateTacosDisplay();
-        updateShopDisplay();
-        updateTacosPerSecond(); // Mettre à jour le nombre de tacos par seconde
-        updateTacosPerClick(); // Mettre à jour le nombre de tacos par clic
-
-        // Affichage du message d'alerte
-        alert("Le jeu a été réinitialisé !");
-    }
-}
-
-// Appel de la fonction pour charger l'état du jeu au chargement de la page
-window.onload = loadGame;
-
-// Appel de la fonction pour sauvegarder l'état du jeu à chaque mise à jour importante
-// Par exemple, à la fin de la fonction updateTacosDisplay()
-updateTacosDisplay = () => {
-    tacosDisplay.textContent = tacos;
-    saveGame(); // Appel de la fonction pour sauvegarder l'état du jeu
-};
-
-// Fonction pour sauvegarder l'état du jeu dans le localStorage
-function saveGame() {
-    const clickMultiplierDisplay = document.querySelector('.clickMultiplierDisplay');
-    const clickMultiplierText = clickMultiplierDisplay.textContent;
-    const clickMultiplierValue = parseInt(clickMultiplierText.match(/\d+/)[0]); // Extraire le nombre de tacos par clic à partir du texte
-
-    const gameState = {
-        tacos: tacos,
-        autoClickerCost: autoClickerCost,
-        autoClickers: autoClickers,
-        clickMultiplierCost: clickMultiplierCost,
-        clickMultiplier: clickMultiplier,
-        bonusCost: bonusCost,
-        tacosPerSecond: tacosPerSecond,
-        currentLevel: currentLevel,
-        levelCost: levelCost, // Ajout du coût du niveau dans l'objet gameState
-        trophyImages: getTrophyImagePaths(), // Appel de la fonction pour obtenir les chemins d'accès des images des trophées
-        tacosPerClick: clickMultiplierValue // Ajout du nombre de tacos par clic
-    };
-    localStorage.setItem('clickerGameState', JSON.stringify(gameState));
-}
-
-
-// Fonction pour charger l'état du jeu depuis le localStorage
-function loadGame() {
-    const savedGameState = localStorage.getItem('clickerGameState');
-    if (savedGameState) {
-        const gameState = JSON.parse(savedGameState);
-        tacos = gameState.tacos;
-        autoClickerCost = gameState.autoClickerCost;
-        autoClickers = gameState.autoClickers;
-        clickMultiplierCost = gameState.clickMultiplierCost;
-        clickMultiplier = gameState.clickMultiplier;
-        bonusCost = gameState.bonusCost;
-        tacosPerSecond = gameState.tacosPerSecond;
-        levelCost = gameState.levelCost; // Mettre à jour le coût du niveau
-        currentLevel = gameState.currentLevel;
-        
-        // Charger le nombre de tacos par clic depuis l'objet gameState
-        const tacosPerClick = gameState.tacosPerClick;
-        updateTacosDisplay();
-        updateShopDisplay();
-        updateTacosPerSecond();
-        updateLevelDisplay(); // Mettre à jour l'affichage du niveau
-        loadTrophyImages(gameState.trophyImages); // Appel de la fonction pour charger les images des trophées
-        
-        // Mettre à jour l'affichage des tacos par clic
-        const clickMultiplierDisplay = document.querySelector('.clickMultiplierDisplay');
-        clickMultiplierDisplay.textContent = `Tacos par clic: ${tacosPerClick}`;
-    }
-}
-
-
-// Fonction pour obtenir les chemins d'accès des images des trophées
-function getTrophyImagePaths() {
-    const trophyImagesContainer = document.getElementById('trophyImages');
-    const trophyImages = trophyImagesContainer.querySelectorAll('.trophy-image');
-    const imagePaths = [];
-    trophyImages.forEach(image => {
-        imagePaths.push(image.src);
-    });
-    return imagePaths;
-}
-
-// Appel de la fonction pour charger l'état du jeu au chargement de la page
-window.onload = loadGame;
-
-// Fonction pour charger les images des trophées
-function loadTrophyImages(imagePaths) {
-    const trophyImagesContainer = document.getElementById('trophyImages');
-    trophyImagesContainer.innerHTML = ''; // Effacer les images précédentes pour éviter les doublons
-    imagePaths.forEach(imagePath => {
-        const trophyImage = document.createElement('img');
-        trophyImage.src = imagePath;
-        trophyImage.alt = 'Trophée';
-        trophyImage.classList.add('trophy-image');
-        trophyImagesContainer.appendChild(trophyImage);
-    });
-}
-
-// Appel de la fonction pour sauvegarder l'état du jeu à chaque mise à jour importante
-// Par exemple, à la fin de la fonction updateTacosDisplay()
-updateTacosDisplay = () => {
-    tacosDisplay.textContent = tacos;
-    saveGame(); // Appel de la fonction pour sauvegarder l'état du jeu
-};
-
-// Fonction de réinitialisation du jeu
-function resetGame() {
-    // Demander une confirmation à l'utilisateur avant de réinitialiser le jeu
-    const confirmation = confirm("Êtes-vous sûr de vouloir réinitialiser le jeu ?");
-    if (confirmation) {
-        // Remise à zéro des valeurs du jeu
-        tacos = 0;
-        autoClickerCost = 10;
-        autoClickers = 0;
-        clickMultiplierCost = 150;
-        clickMultiplier = 1;
-        bonusCost = 20;
-        tacosPerSecond = 0;
-        currentLevel = 1; // Réinitialiser le niveau à 1
-
-        // Réinitialiser le coût du niveau au coût initial (niveau 1)
-        levelCost = 100;
-
-        // Supprimer toutes les images des trophées
-        const trophyImagesContainer = document.getElementById('trophyImages');
-        trophyImagesContainer.innerHTML = '';
-
-        // Mise à jour de l'affichage
-        updateTacosDisplay();
-        updateShopDisplay();
-        updateTacosPerSecond(); // Mettre à jour le nombre de tacos par seconde
-        updateTacosPerClick(); // Mettre à jour le nombre de tacos par clic
-        updateLevelDisplay(); // Mettre à jour l'affichage du niveau
-
-        // Affichage du message d'alerte
-        alert("Le jeu a été réinitialisé !");
-    }
-}
-
-clickButton.addEventListener('click', (event) => {
-    const clickX = event.clientX - container.getBoundingClientRect().left;
-    const clickY = event.clientY - container.getBoundingClientRect().top;
-
-    const clickFeedback = document.createElement('div');
-    clickFeedback.textContent = '\uD83D\uDC9B'; // Texte vide
-    clickFeedback.style.position = 'absolute';
-    clickFeedback.style.top = `${clickY}px`;
-    clickFeedback.style.left = `${clickX}px`;
-    clickFeedback.style.fontSize = '24px';
-    clickFeedback.style.color = '';
-    clickFeedback.id = 'clickFeedback';
-
-    container.appendChild(clickFeedback);
-
-    setTimeout(() => {
-        clickFeedback.remove();
-    }, 1000);
-
-    clickFeedback.classList.add('click-feedback-animation'); // Ajout de la classe pour l'animation
-});
-
-let currentLevel = 1;
-let maxLevel = 10; // Par exemple, vous pouvez définir un maximum de 5 niveaux
-let levelCost = 100; // Coût initial pour débloquer le prochain niveau
 
 // Fonction de mise à jour de l'affichage du niveau
 function updateLevelDisplay() {
@@ -322,10 +161,6 @@ const tacoImages = [
     './media/level5.png',
     './media/level6.png',
     './media/level7.png',
-    
-    
-
-
     // Ajoutez les chemins d'accès des images pour chaque niveau suivant
 ];
 
@@ -335,12 +170,12 @@ const levelUpSound = document.getElementById('levelUpSound');
 // Modifier la fonction d'achat de niveau
 function buyLevel() {
     // Calcul du coût du prochain niveau en fonction du niveau actuel
-    const newLevelCost = currentLevel * 100; // Coefficient de 100 pour chaque niveau
+    const newLevelCost = currentLevel * 10000; // Coefficient de 100 pour chaque niveau
 
     if (tacos >= newLevelCost && currentLevel < maxLevel) {
         tacos -= newLevelCost;
         currentLevel++;
-        levelCost = (currentLevel * 100); // Mettre à jour le coût avec le nouveau coût calculé
+        levelCost = (currentLevel * 10000); // Mettre à jour le coût avec le nouveau coût calculé
         updateTacosDisplay();
         updateShopDisplay();
         updateLevelDisplay(); // Mettre à jour l'affichage du niveau
@@ -459,7 +294,6 @@ function moveImageRandomly() {
 });
 
 // son étoile
-
 document.addEventListener("DOMContentLoaded", function() {
     const miniIcon = document.getElementById("miniIcon1");
     const clickSound = document.getElementById("clickSound");
@@ -471,22 +305,58 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
-// son lvl
+// animation coeur jaune
+clickButton.addEventListener('click', (event) => {
+    const clickX = event.clientX - container.getBoundingClientRect().left;
+    const clickY = event.clientY - container.getBoundingClientRect().top;
 
-// Sélectionnez l'image de tacos
-const tacosImage = document.getElementById('clickButton');
+    const clickFeedback = document.createElement('div');
+    clickFeedback.textContent = '\uD83D\uDC9B'; // Texte vide
+    clickFeedback.style.position = 'absolute';
+    clickFeedback.style.top = `${clickY}px`;
+    clickFeedback.style.left = `${clickX}px`;
+    clickFeedback.style.fontSize = '24px';
+    clickFeedback.style.color = '';
+    clickFeedback.id = 'clickFeedback';
 
-// Sélectionnez l'élément audio correspondant à l'effet sonore
-const clickSound = document.getElementById('clickSound1');
+    container.appendChild(clickFeedback);
 
-// Ajoutez un gestionnaire d'événements pour le clic sur l'image de tacos
-tacosImage.addEventListener('click', function() {
-    // Jouez l'effet sonore du clic
-    clickSound.play();
+    setTimeout(() => {
+        clickFeedback.remove();
+    }, 1000);
+
+    clickFeedback.classList.add('click-feedback-animation'); // Ajout de la classe pour l'animation
 });
+
+// Sélectionnez l'élément audio correspondant au son des pouvoirs de la boutique
+const shopPowerSound = document.getElementById('shopPowerSound');
+
+// Ajoutez un gestionnaire d'événements pour le clic sur chaque bouton de la boutique
+autoClickerBtn.addEventListener('click', playShopPowerSound);
+clickMultiplierBtn.addEventListener('click', playShopPowerSound);
+bonusBtn.addEventListener('click', playShopPowerSound);
+
+// Fonction pour jouer le son des pouvoirs de la boutique
+function playShopPowerSound() {
+    shopPowerSound.play();
+}
+
+// Ajoutez un gestionnaire d'événements pour le clic sur le bouton de burger
+burgerButton.addEventListener('click', toggleMenu);
+
+// Fonction pour basculer l'état du menu et jouer le son approprié
+function toggleMenu() {
+    const menu = document.querySelector('.menu');
+    if (menu.style.display === 'none' || menu.style.display === '') {
+        menu.style.display = 'block';
+        menuOpenSound.play(); // Jouez le son d'ouverture du menu
+    } else {
+        menu.style.display = 'none';
+        menuCloseSound.play(); // Jouez le son de fermeture du menu
+    }
+}
+
 
 
  //ajouter l'améloration des pouvoirs"
-
-// son et animation aux trophée
 
