@@ -423,9 +423,35 @@ function moveImageRandomly() {
      image.style.visibility = 'hidden';
      setTimeout(() => {
          image.style.visibility = 'visible'; // Rendre à nouveau l'image visible après un délai
-     }, 3000); // 2000 millisecondes (2 secondes) de délai
+     }, 5000); // 2000 millisecondes (2 secondes) de délai
  }
  
+ document.addEventListener("DOMContentLoaded", function() {
+    const toggleMusicButton = document.getElementById("toggleMusicButton");
+    const backgroundMusic = document.getElementById("backgroundMusic");
+    let isMusicPlaying = true;
+
+    // Fonction pour basculer la musique entre "On" et "Off"
+    function toggleMusic() {
+        if (isMusicPlaying) {
+            backgroundMusic.pause();
+            toggleMusicButton.textContent = "Music Off";
+        } else {
+            backgroundMusic.play();
+            toggleMusicButton.textContent = "Music On";
+        }
+        isMusicPlaying = !isMusicPlaying;
+    }
+
+    // Gestionnaire d'événement pour le bouton de basculement de la musique
+    toggleMusicButton.addEventListener("click", toggleMusic);
+
+    // Démarrer la musique dès que le contenu de la page est chargé
+    backgroundMusic.play();
+});
+
+
+
  //ajouter l'améloration des pouvoirs"
 
 // son et animation aux trophée
