@@ -150,8 +150,6 @@ bonusBtn.addEventListener('click', () => {
     }
 });
 
-
-
 // Démarrer les auto-clickers
 startAutoClicker();
 
@@ -268,6 +266,17 @@ function updateClickMultiplierDisplay() {
     const clickMultiplierDisplay = document.querySelector('.clickMultiplierDisplay');
     clickMultiplierDisplay.textContent = `Tacos par clic: ${clickMultiplier}`;
 }
+// Fonction pour mettre à jour l'affichage des tacos par seconde
+function updateTacosPerSecondDisplay() {
+    const tpsDisplay = document.getElementById('tpsDisplay');
+    tpsDisplay.textContent = `Tacos par seconde: ${tacosPerSecond}`;
+}
+
+// Fonction pour augmenter les tacos par seconde lorsque l'étoile est cliquée
+function increaseTacosPerSecond() {
+    tacosPerSecond++; // Augmentez les tacos par seconde de 1 à chaque clic sur l'étoile
+    updateTacosPerSecondDisplay(); // Mettre à jour l'affichage des tacos par seconde
+}
 
 // Événement pour ajouter un écouteur de clic à l'icône miniIcon1
 const miniIcon1 = document.getElementById('miniIcon1');
@@ -380,8 +389,4 @@ function toggleMenu() {
         menuCloseSound.play(); // Jouez le son de fermeture du menu
     }
 }
-
-
-
- //ajouter l'améloration des pouvoirs"
 
