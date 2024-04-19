@@ -113,18 +113,44 @@ function updateBonusTimer(timeRemaining = 10) {
     bonusTimerDisplay.textContent = `Bonus Temporaire: ${timeRemaining} secondes restantes`;
 }
 
+let bonusCooldown = false; // Initialise le cooldown à false
+
 // Fonction d'achat d'un bonus temporaire
 bonusBtn.addEventListener('click', () => {
-    if (tacos >= bonusCost) {
+    if (!bonusCooldown && tacos >= bonusCost) { // Vérifie si le cooldown est désactivé et si le joueur a assez de tacos
         tacos -= bonusCost;
         // Appliquer le bonus temporaire
         applyBonus();
+        // Double le prix du bonus pour le prochain achat
+        bonusCost *= 2;
         updateTacosDisplay();
         updateShopDisplay();
-    } else {
+        
+        // Active le cooldown
+        bonusCooldown = true;
+        const cooldownDuration = 20000; // Durée du cooldown en millisecondes (20 secondes)
+        const cooldownInterval = 100; // Intervalle de mise à jour de la jauge de cooldown en millisecondes
+        const cooldownIncrement = (cooldownInterval / cooldownDuration) * 100; // Incrément de remplissage de la jauge
+        
+        const cooldownBar = document.getElementById('bonusCooldownBarFill');
+        let cooldownProgress = 0;
+        const cooldownTimer = setInterval(() => {
+            cooldownProgress += cooldownIncrement;
+            cooldownBar.style.width = cooldownProgress + '%';
+            if (cooldownProgress >= 100) {
+                clearInterval(cooldownTimer);
+                cooldownBar.style.width = '0%';
+                bonusCooldown = false; // Désactive le cooldown après la durée spécifiée
+            }
+        }, cooldownInterval);
+    } else if (bonusCooldown) { // Si le cooldown est actif
+        alert("Veuillez patienter, le cooldown est toujours en cours.");
+    } else { // Si le joueur n'a pas assez de tacos
         alert("Pas assez de tacos !");
     }
 });
+
+
 
 // Démarrer les auto-clickers
 startAutoClicker();
@@ -268,7 +294,6 @@ function moveImageRandomly() {
  }
  
  // music on et off de fond
-
  document.addEventListener("DOMContentLoaded", function() {
     const toggleMusicButton = document.getElementById("toggleMusicButton");
     const backgroundMusic = document.getElementById("backgroundMusic");
